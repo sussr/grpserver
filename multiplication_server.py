@@ -64,14 +64,6 @@ class MultiplicationServicer(multiplication_pb2_grpc.MultiplicationServicer):
             elapsed_time=int(elapsed_time),
         )
 
-    def MultiplicationChat(self, request_iterator, context):
-        prev_notes = []
-        for new_note in request_iterator:
-            for prev_note in prev_notes:
-                if prev_note.number == new_note.number:
-                    yield prev_note
-            prev_notes.append(new_note)
-
 
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
