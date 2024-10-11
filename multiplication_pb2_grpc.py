@@ -3,7 +3,7 @@
 import grpc
 import warnings
 
-import route_guide_pb2 as route__guide__pb2
+import multiplication_pb2 as multiplication__pb2
 
 GRPC_GENERATED_VERSION = '1.66.2'
 GRPC_VERSION = grpc.__version__
@@ -18,16 +18,15 @@ except ImportError:
 if _version_not_supported:
     raise RuntimeError(
         f'The grpc package installed is at version {GRPC_VERSION},'
-        + f' but the generated code in route_guide_pb2_grpc.py depends on'
+        + f' but the generated code in multiplication_pb2_grpc.py depends on'
         + f' grpcio>={GRPC_GENERATED_VERSION}.'
         + f' Please upgrade your grpc module to grpcio>={GRPC_GENERATED_VERSION}'
         + f' or downgrade your generated code using grpcio-tools<={GRPC_VERSION}.'
     )
 
 
-class RouteGuideStub(object):
-    """The RouteGuide service definition.
-    """
+class MultiplicationStub(object):
+    """Missing associated documentation comment in .proto file."""
 
     def __init__(self, channel):
         """Constructor.
@@ -35,97 +34,91 @@ class RouteGuideStub(object):
         Args:
             channel: A grpc.Channel.
         """
-        self.GetFeature = channel.unary_unary(
-                '/route_guide.RouteGuide/GetFeature',
-                request_serializer=route__guide__pb2.Point.SerializeToString,
-                response_deserializer=route__guide__pb2.Feature.FromString,
+        self.GetMultiplier = channel.unary_unary(
+                '/multiplication.Multiplication/GetMultiplier',
+                request_serializer=multiplication__pb2.Point.SerializeToString,
+                response_deserializer=multiplication__pb2.Multiplier.FromString,
                 _registered_method=True)
-        self.ListFeatures = channel.unary_stream(
-                '/route_guide.RouteGuide/ListFeatures',
-                request_serializer=route__guide__pb2.Rectangle.SerializeToString,
-                response_deserializer=route__guide__pb2.Feature.FromString,
+        self.ListMultipliers = channel.unary_stream(
+                '/multiplication.Multiplication/ListMultipliers',
+                request_serializer=multiplication__pb2.Rectangle.SerializeToString,
+                response_deserializer=multiplication__pb2.Multiplier.FromString,
                 _registered_method=True)
-        self.RecordRoute = channel.stream_unary(
-                '/route_guide.RouteGuide/RecordRoute',
-                request_serializer=route__guide__pb2.Point.SerializeToString,
-                response_deserializer=route__guide__pb2.RouteSummary.FromString,
+        self.RecordMultiplication = channel.stream_unary(
+                '/multiplication.Multiplication/RecordMultiplication',
+                request_serializer=multiplication__pb2.Point.SerializeToString,
+                response_deserializer=multiplication__pb2.MultiplicationSummary.FromString,
                 _registered_method=True)
-        self.RouteChat = channel.stream_stream(
-                '/route_guide.RouteGuide/RouteChat',
-                request_serializer=route__guide__pb2.RouteNote.SerializeToString,
-                response_deserializer=route__guide__pb2.RouteNote.FromString,
+        self.MultiplicationChat = channel.stream_stream(
+                '/multiplication.Multiplication/MultiplicationChat',
+                request_serializer=multiplication__pb2.Multiplier.SerializeToString,
+                response_deserializer=multiplication__pb2.Multiplier.FromString,
                 _registered_method=True)
 
 
-class RouteGuideServicer(object):
-    """The RouteGuide service definition.
-    """
+class MultiplicationServicer(object):
+    """Missing associated documentation comment in .proto file."""
 
-    def GetFeature(self, request, context):
-        """Unary RPC: Get a single feature for the given Point.
-        """
+    def GetMultiplier(self, request, context):
+        """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def ListFeatures(self, request, context):
-        """Server-side streaming RPC: List features between a specified range of Points.
-        """
+    def ListMultipliers(self, request, context):
+        """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def RecordRoute(self, request_iterator, context):
-        """Client-side streaming RPC: Record a route by streaming Points from the client.
-        """
+    def RecordMultiplication(self, request_iterator, context):
+        """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def RouteChat(self, request_iterator, context):
-        """Bidirectional streaming RPC: RouteChat allows client and server to exchange notes.
-        """
+    def MultiplicationChat(self, request_iterator, context):
+        """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
 
-def add_RouteGuideServicer_to_server(servicer, server):
+def add_MultiplicationServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'GetFeature': grpc.unary_unary_rpc_method_handler(
-                    servicer.GetFeature,
-                    request_deserializer=route__guide__pb2.Point.FromString,
-                    response_serializer=route__guide__pb2.Feature.SerializeToString,
+            'GetMultiplier': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetMultiplier,
+                    request_deserializer=multiplication__pb2.Point.FromString,
+                    response_serializer=multiplication__pb2.Multiplier.SerializeToString,
             ),
-            'ListFeatures': grpc.unary_stream_rpc_method_handler(
-                    servicer.ListFeatures,
-                    request_deserializer=route__guide__pb2.Rectangle.FromString,
-                    response_serializer=route__guide__pb2.Feature.SerializeToString,
+            'ListMultipliers': grpc.unary_stream_rpc_method_handler(
+                    servicer.ListMultipliers,
+                    request_deserializer=multiplication__pb2.Rectangle.FromString,
+                    response_serializer=multiplication__pb2.Multiplier.SerializeToString,
             ),
-            'RecordRoute': grpc.stream_unary_rpc_method_handler(
-                    servicer.RecordRoute,
-                    request_deserializer=route__guide__pb2.Point.FromString,
-                    response_serializer=route__guide__pb2.RouteSummary.SerializeToString,
+            'RecordMultiplication': grpc.stream_unary_rpc_method_handler(
+                    servicer.RecordMultiplication,
+                    request_deserializer=multiplication__pb2.Point.FromString,
+                    response_serializer=multiplication__pb2.MultiplicationSummary.SerializeToString,
             ),
-            'RouteChat': grpc.stream_stream_rpc_method_handler(
-                    servicer.RouteChat,
-                    request_deserializer=route__guide__pb2.RouteNote.FromString,
-                    response_serializer=route__guide__pb2.RouteNote.SerializeToString,
+            'MultiplicationChat': grpc.stream_stream_rpc_method_handler(
+                    servicer.MultiplicationChat,
+                    request_deserializer=multiplication__pb2.Multiplier.FromString,
+                    response_serializer=multiplication__pb2.Multiplier.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'route_guide.RouteGuide', rpc_method_handlers)
+            'multiplication.Multiplication', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
-    server.add_registered_method_handlers('route_guide.RouteGuide', rpc_method_handlers)
+    server.add_registered_method_handlers('multiplication.Multiplication', rpc_method_handlers)
 
 
  # This class is part of an EXPERIMENTAL API.
-class RouteGuide(object):
-    """The RouteGuide service definition.
-    """
+class Multiplication(object):
+    """Missing associated documentation comment in .proto file."""
 
     @staticmethod
-    def GetFeature(request,
+    def GetMultiplier(request,
             target,
             options=(),
             channel_credentials=None,
@@ -138,9 +131,9 @@ class RouteGuide(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/route_guide.RouteGuide/GetFeature',
-            route__guide__pb2.Point.SerializeToString,
-            route__guide__pb2.Feature.FromString,
+            '/multiplication.Multiplication/GetMultiplier',
+            multiplication__pb2.Point.SerializeToString,
+            multiplication__pb2.Multiplier.FromString,
             options,
             channel_credentials,
             insecure,
@@ -152,7 +145,7 @@ class RouteGuide(object):
             _registered_method=True)
 
     @staticmethod
-    def ListFeatures(request,
+    def ListMultipliers(request,
             target,
             options=(),
             channel_credentials=None,
@@ -165,9 +158,9 @@ class RouteGuide(object):
         return grpc.experimental.unary_stream(
             request,
             target,
-            '/route_guide.RouteGuide/ListFeatures',
-            route__guide__pb2.Rectangle.SerializeToString,
-            route__guide__pb2.Feature.FromString,
+            '/multiplication.Multiplication/ListMultipliers',
+            multiplication__pb2.Rectangle.SerializeToString,
+            multiplication__pb2.Multiplier.FromString,
             options,
             channel_credentials,
             insecure,
@@ -179,7 +172,7 @@ class RouteGuide(object):
             _registered_method=True)
 
     @staticmethod
-    def RecordRoute(request_iterator,
+    def RecordMultiplication(request_iterator,
             target,
             options=(),
             channel_credentials=None,
@@ -192,9 +185,9 @@ class RouteGuide(object):
         return grpc.experimental.stream_unary(
             request_iterator,
             target,
-            '/route_guide.RouteGuide/RecordRoute',
-            route__guide__pb2.Point.SerializeToString,
-            route__guide__pb2.RouteSummary.FromString,
+            '/multiplication.Multiplication/RecordMultiplication',
+            multiplication__pb2.Point.SerializeToString,
+            multiplication__pb2.MultiplicationSummary.FromString,
             options,
             channel_credentials,
             insecure,
@@ -206,7 +199,7 @@ class RouteGuide(object):
             _registered_method=True)
 
     @staticmethod
-    def RouteChat(request_iterator,
+    def MultiplicationChat(request_iterator,
             target,
             options=(),
             channel_credentials=None,
@@ -219,9 +212,9 @@ class RouteGuide(object):
         return grpc.experimental.stream_stream(
             request_iterator,
             target,
-            '/route_guide.RouteGuide/RouteChat',
-            route__guide__pb2.RouteNote.SerializeToString,
-            route__guide__pb2.RouteNote.FromString,
+            '/multiplication.Multiplication/MultiplicationChat',
+            multiplication__pb2.Multiplier.SerializeToString,
+            multiplication__pb2.Multiplier.FromString,
             options,
             channel_credentials,
             insecure,
