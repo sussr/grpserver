@@ -7,12 +7,6 @@ import multiplication_pb2_grpc
 import multiplication_resources
 
 
-def make_number_note(message, number):
-    return multiplication_pb2.Multiplier(
-        number=multiplication_pb2.Point(number=number),
-    )
-
-
 def format_point(point):
     return "number: %d" % point.number
 
@@ -41,18 +35,9 @@ def guide_record_multiplication(stub, count=10):
     feature_list = multiplication_resources.read_multiplication_database()
     route_iterator = generate_route(feature_list, count)
     route_summary = stub.RecordMultiplication(route_iterator)
-    print(f"Finished trip with {route_summary.point_count} points")
     print(f"Passed {route_summary.feature_count} features")
     print(f"Multiplication result: {route_summary.multiplication_result}")
     print(f"It took {route_summary.elapsed_time} seconds")
-
-
-def generate_messages():
-    numbers = [1, 2, 3, 4, 5]
-    for number in numbers:
-        msg = make_number_note(number)
-        print(f"Sending number {format_point(msg.number)}")
-        yield msg
 
 
 def run():
