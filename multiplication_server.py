@@ -1,14 +1,13 @@
 from concurrent import futures
 import logging
 import time
-
 import grpc
-import route_guide_pb2
-import route_guide_pb2_grpc
-import route_guide_resources
+import multiplication_pb2
+import multiplication_pb2_grpc
+import multiplication_resources
 
 
-def get_feature(feature_db, point):
+def get_multiplier(feature_db, point):
     """Returns Feature at given number or None."""
     for feature in feature_db:
         if feature.number == point:
@@ -22,20 +21,20 @@ def get_number(get):
     return current_number
 
 
-class RouteGuideServicer(route_guide_pb2_grpc.RouteGuideServicer):
-    """Provides methods that implement functionality of route guide server."""
+class MultiplicationServicer(multiplication_pb2_grpc.MultiplicationServicer):
+    """Provides methods that implement functionality of multiplication server."""
 
     def __init__(self):
-        self.db = route_guide_resources.read_route_guide_database()
+        self.db = multiplication_resources.read_multiplication_database()
 
-    def GetFeature(self, request, context):
-        feature = get_feature(self.db, request)
+    def GetMultiplier(self, request, context):
+        feature = get_multiplier(self.db, request)
         if feature is None:
-            return route_guide_pb2.Feature(number=request)
+            return multiplication_pb2.Multiplier(number=request)
         else:
             return feature
 
-    def ListFeatures(self, request, context):
+    def ListMultipliers(self, request, context):
         least = min(request.lo.number, request.hi.number)
         most = max(request.lo.number, request.hi.number)
         for feature in self.db:
@@ -45,7 +44,7 @@ class RouteGuideServicer(route_guide_pb2_grpc.RouteGuideServicer):
             ):
                 yield feature
 
-    def RecordRoute(self, request_iterator, context):
+    def RecordMultiplication(self, request_iterator, context):
         point_count = 0
         feature_count = 0
         multiplication_result = 1
@@ -53,19 +52,19 @@ class RouteGuideServicer(route_guide_pb2_grpc.RouteGuideServicer):
         start_time = time.time()
         for point in request_iterator:
             point_count += 1
-            if get_feature(self.db, point):
+            if get_multiplier(self.db, point):
                 feature_count += 1
                 multiplication_result *= get_number(point)
 
         elapsed_time = time.time() - start_time
-        return route_guide_pb2.RouteSummary(
+        return multiplication_pb2.MultiplicationSummary(
             point_count=point_count,
             feature_count=feature_count,
             multiplication_result=multiplication_result,
             elapsed_time=int(elapsed_time),
         )
 
-    def RouteChat(self, request_iterator, context):
+    def MultiplicationChat(self, request_iterator, context):
         prev_notes = []
         for new_note in request_iterator:
             for prev_note in prev_notes:
@@ -76,8 +75,8 @@ class RouteGuideServicer(route_guide_pb2_grpc.RouteGuideServicer):
 
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
-    route_guide_pb2_grpc.add_RouteGuideServicer_to_server(
-        RouteGuideServicer(), server
+    multiplication_pb2_grpc.add_MultiplicationServicer_to_server(
+        MultiplicationServicer(), server
     )
     server.add_insecure_port("[::]:50051")
     server.start()
